@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "22d0abca-221d-4074-b3fc-82f50f88836e",
+		"name": "lcs-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "lcs- SUCCESS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9304bafe-6cbd-4895-9e14-25a3d10ea1d9",
+						"exec": [
+							"pm.test(\"Status 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Payload check\", function () {\r",
+							"      \r",
+							"      pm.expect(jsonData).to.have.property('lcs');\r",
+							"      \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"setOfStrings\": [\r\n        {\r\n            \"value\": \"comcasst\"\r\n        },\r\n        {\r\n            \"value\": \"comcasstic\"\r\n        },\r\n        {\r\n            \"value\": \"broadcasster\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/lcs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lcs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lcs- ERROR",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"setOfStrings\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lcs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lcs"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
