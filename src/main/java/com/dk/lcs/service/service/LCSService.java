@@ -1,4 +1,4 @@
-package com.dk.stringprocessorservice.service;
+package com.dk.lcs.service.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.dk.stringprocessorservice.dto.InputStringDTO;
-import com.dk.stringprocessorservice.dto.LongestCommonSubStringDTO;
-import com.dk.stringprocessorservice.dto.LongestCommonSubStringResponseDTO;
+import com.dk.lcs.service.dto.InputStringDTO;
+import com.dk.lcs.service.dto.LongestCommonSubStringDTO;
+import com.dk.lcs.service.dto.LongestCommonSubStringResponseDTO;
 
 import lombok.NoArgsConstructor;
 
