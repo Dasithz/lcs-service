@@ -1,32 +1,42 @@
-package com.dk.lcs.service.service;
+package com.dk.stringprocessorservice.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.dk.lcs.service.dto.InputStringDTO;
-import com.dk.lcs.service.dto.LongestCommonSubStringDTO;
-import com.dk.lcs.service.dto.LongestCommonSubStringResponseDTO;
+import com.dk.stringprocessorservice.dto.InputStringDTO;
+import com.dk.stringprocessorservice.dto.LongestCommonSubStringDTO;
+import com.dk.stringprocessorservice.dto.LongestCommonSubStringResponseDTO;
 
 import lombok.NoArgsConstructor;
 
 @Service
 @NoArgsConstructor
 public class LCSService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(LCSService.class);
 
 	public static List<String> getLCS(List<String> inputs) {
 		List<String> commonStringList = new ArrayList<String>();
 
 		for (int i = 0; i < inputs.size(); i++) {
 			for (int j = 0; j < inputs.size(); j++) {
-				commonStringList.add(getLCSofTwoStrings(inputs.get(i), inputs.get(j)));
+				if (i != j) {
+					String lcString = getLCSofTwoStrings(inputs.get(i), inputs.get(j));
+					if (StringUtils.isNotBlank(lcString)) {
+						LOGGER.info(String.format("LCS for %s and %s is %s", inputs.get(i), inputs.get(j), lcString));
+						commonStringList.add(lcString);
+					}else {
+						LOGGER.info(String.format("LCS for %s and %s is not available", inputs.get(i), inputs.get(j)));
+					}
+				}
 			}
 		}
-		
 		return commonStringList;
 	}
 
@@ -34,11 +44,9 @@ public class LCSService {
 
 		List<String> processableStrings = new ArrayList<String>();
 		inputStrings.forEach(inputString -> processableStrings.add(inputString.getValue()));
-		
-		String mostRepeatedWord = getLCS(processableStrings).stream()
-				.collect(Collectors.groupingBy(w -> w, Collectors.counting())).entrySet().stream()
-				.max(Comparator.comparing(Entry::getValue)).get().getKey();
-		
+
+		String mostRepeatedWord = Collections.max(getLCS(processableStrings), Comparator.comparing(String::length));
+
 		List<LongestCommonSubStringDTO> lcsList = new ArrayList<LongestCommonSubStringDTO>();
 		lcsList.add(LongestCommonSubStringDTO.builder().value(mostRepeatedWord).build());
 
